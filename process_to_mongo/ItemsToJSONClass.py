@@ -41,3 +41,7 @@ class ItemsToJSONClass():
                     time = self.parse_string_date_header(file)
                     item.update({'time': time})
                     self.VeloItems.insert_one(item)
+
+    def make_me_happy(self, path_to_dir):
+        dir = self.get_list_of_json_files(path_to_directory=path_to_dir)
+        self.make_mongo_eat_data(path_to_direcory=dir)
