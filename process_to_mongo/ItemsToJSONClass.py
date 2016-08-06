@@ -31,6 +31,8 @@ class ItemsToJSONClass():
         return dir_list
 
     def make_mongo_eat_data(self, path_to_direcory):
+        print("Start processing data ...")
+        bulc = self.VeloItems.initialize_ordered_bulk_op()
         for file in path_to_direcory:
             with open(file) as f:
                 single_item = json.load(f)
@@ -40,7 +42,9 @@ class ItemsToJSONClass():
                     file = file[len(file)-1]
                     time = self.parse_string_date_header(file)
                     item.update({'time': time})
-                    self.VeloItems.insert_one(item)
+                    bulc.insert(item)
+        bulc.execute()
+        print("Data Processed !!!")
 
     def make_me_happy(self):
         dir = self.get_list_of_json_files(path_to_directory=self.directory_path)
